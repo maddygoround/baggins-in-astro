@@ -1,0 +1,34 @@
+---
+import { Image } from "astro:assets"
+const { size } = Astro.props
+---
+
+<div
+  class='relative rounded-full'
+  style={{
+    width: `${size}px`,
+    height: `${size}px`,
+    backgroundColor: "#FCC098",
+  }}
+>
+  <Image
+    class='rounded-full'
+    src='/portrait.jpg'
+    alt='Portrait photo of me'
+    height={size}
+    quality={85}
+    width={size}
+    style={{
+      width: `${size}px`,
+      height: `${size}px`,
+    }}
+  />
+  <div
+    class='absolute rounded-full inset-0'
+    style={{
+      boxShadow:
+        "inset 0 0 0 1px rgba(0,0,0,0.15), inset 0 0 0 2px rgba(255,255,255,0.2)",
+    }}
+  >
+  </div>
+</div>

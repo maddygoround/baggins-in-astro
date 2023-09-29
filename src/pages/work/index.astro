@@ -1,0 +1,22 @@
+---
+import { SEO } from "astro-seo"
+import { Work } from "../../components/sections/work"
+import { Footer } from "../../components/sections/footer"
+import { Nav } from "../../components/sections/nav"
+import { Project } from "../../types/project"
+import { getBlogTable } from "../../core/blog"
+import { config } from "../../config"
+import BaseLayout from "../../Layouts/BaseLayout.astro"
+
+const projects = await getBlogTable<Project>(config.notionProjectTableId)
+---
+
+<BaseLayout>
+  <Nav />
+  <SEO
+    title={"Work ~ Mahendra Rathod"}
+    description="A collection of some of my work I've made in the past. Including web apps, landing page designs and videos."
+  />
+  <Work projects={projects.filter((post) => post.published)} />
+  <Footer />
+</BaseLayout>

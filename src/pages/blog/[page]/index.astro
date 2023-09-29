@@ -1,0 +1,51 @@
+---
+import { SEO } from "astro-seo"
+import { Nav } from "../../../components/sections/nav"
+import { Footer } from "../../../components/sections/footer"
+import { Blog } from "../../../components/sections/blog"
+import { Post } from "../../../types/blog"
+import { getBlogTable } from "../../../core/blog"
+import { config } from "../../../config"
+import BaseLayout from "../../../Layouts/BaseLayout.astro"
+
+export const getStaticPaths = async ({ paginate }) => {
+  const posts = await getBlogTable<Post>(config.notionBlogTableId)
+  const filteredPosts = posts
+    .filter(
+      (post) => import.meta.env.NODE_ENV === "development" || post.published
+    )
+    .sort((a, b) => Number(new Date(b.date)) - Number(new Date(a.date)))
+  // Generate pages from our array of astronauts, with 2 to a page
+  return paginate(filteredPosts, { pageSize: 4 })
+}
+
+const { page } = Astro.props
+---
+
+<BaseLayout>
+  <Nav />
+  <SEO
+    title={"Blog ~ Mahendra Rathod"}
+    description='My personal blog about design, coding and everything else that is on my mind.'
+  />
+  <div class='flex-1'>
+    <Blog posts={page.data} />
+  </div>
+  <div class='flex justify-between items-center my-8 container relative'>
+    {
+      page.url.prev ? (
+        <a href={page.url.prev} class='text-blue-600 text-sm left-0 absolute'>
+          <span class='font-semibold'>← Previous</span>
+        </a>
+      ) : null
+    }
+    {
+      page.url.next ? (
+        <a href={page.url.next} class='text-blue-600 text-sm right-0 absolute'>
+          <span class='font-semibold'>Next →</span>
+        </a>
+      ) : null
+    }
+  </div>
+  <Footer />
+</BaseLayout>

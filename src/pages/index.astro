@@ -1,0 +1,62 @@
+---
+import BaseLayout from "../Layouts/BaseLayout.astro"
+import { type Project } from "../types/project"
+import { getBlogTable, getPageBlocks } from "../core/blog"
+import { config } from "../config"
+import { Work } from "../components/sections/work"
+import { GitHubActivity } from "../components/sections/github-activity"
+import { Hero } from "../components/sections/hero"
+import { Footer } from "../components/sections/footer"
+import { Achievements } from "../components/sections/achievements"
+import { type Achievement } from "../types/achievement"
+import { SEO } from "astro-seo"
+import { getOpenGraphImage } from "../core/og-image"
+import { fetchRepos } from "../core/github"
+
+const projects = await getBlogTable<Project>(config.notionProjectTableId)
+const achievementsData = await getBlogTable<Omit<Achievement, "blockMap">>(
+  config.notionAchievementTableId
+)
+const achievements: Achievement[] = await Promise.all(
+  achievementsData.map(async (a) => ({
+    ...a,
+    blockMap: await getPageBlocks(a.id),
+  }))
+)
+
+const { contributedRepos, starredRepos } = await fetchRepos(
+  config.githubUsername,
+  config.githubToken
+)
+const repos = {
+  starredRepos,
+  contributedRepos,
+}
+
+---
+
+<BaseLayout>
+  <SEO
+    slot='seo'
+    title={"Mahendra Rathod – Code · Play · Sleep"}
+    titleTemplate={"%s"}
+    description="Hey I'm Mahendra! I code and build digital products. Gaming and Streaming are also my passion."
+    openGraph={{
+      basic: {
+        title: "Mahendra Rathod – Code · Play · Sleep",
+        type: "profile",
+        image: getOpenGraphImage("Mahendra Rathod").url,
+      },
+      image: getOpenGraphImage("Mahendra Rathod"),
+    }}
+    twitter={{
+      creator: "@maddygoround1",
+      card : "summary_large_image"
+    }}
+  />
+  <Hero />
+  <Work projects={projects} preview />
+  <Achievements achievements={achievements} client:load />
+  <GitHubActivity {...repos} />
+  <Footer />
+</BaseLayout>

@@ -1,0 +1,103 @@
+---
+import "react-notion/src/styles.css"
+import { getBlogTable, getPageBlocks } from "../core/blog"
+import { type Project } from "../types/project"
+import { config } from "../config"
+import { NotionRenderer } from "react-notion"
+import { getOpenGraphImage } from "../core/og-image"
+import { dateFormatter } from "../core/utils"
+import { toNotionImageUrl } from "../core/notion"
+import { Nav } from "../components/sections/nav"
+import { SEO } from "astro-seo"
+import { Project as ProjectCard } from "../components/sections/work"
+import { AuthorFooter } from "../components/base/author-footer"
+import { Footer } from "../components/sections/footer"
+import BaseLayout from "../Layouts/BaseLayout.astro"
+
+export const getStaticPaths = async () => {
+  const table = await getBlogTable<Project>(config.notionProjectTableId)
+  return table
+    .filter((row) => row.published)
+    .map((row) => {
+      return {
+        params: {
+          project: `${row.slug}`,
+        },
+      }
+    })
+    .filter(Boolean)
+}
+
+const { project } = Astro.params
+
+const table = await getBlogTable<Project>(config.notionProjectTableId)
+const publishedProjects = table.filter((p) => p.published)
+
+const post = table.find((t) => t.slug === project)
+const postIndex = publishedProjects.findIndex((t) => t.slug === project)
+
+const morePosts = [...publishedProjects, ...publishedProjects].slice(
+  postIndex + 1,
+  postIndex + 3
+)
+
+if (!post || (!post.published && import.meta.env.NODE_ENV !== "development")) {
+  throw Error(`Failed to find post for slug: ${project}`)
+}
+
+const blocks = await getPageBlocks(post.id)
+---
+
+<BaseLayout>
+  <SEO
+    slot='seo'
+    title={post.title}
+    description={post.preview}
+    canonical={`https://baggins.me/${post.slug}`}
+    openGraph={{
+      basic: {
+        title: `${post.title} – Mahendra Rathod / Work`,
+        type: "article",
+        image: getOpenGraphImage(post.title).url,
+      },
+      image: getOpenGraphImage(post.title),
+      article: {
+        publishedTime: new Date(post.date).toISOString(),
+        tags: post.tags,
+      },
+    }}
+    twitter={{
+      creator: "@maddygoround1",
+      card: "summary_large_image",
+    }}
+    titleTemplate={"%s – Mahendra Rathod / Work"}
+  />
+  <Nav />
+  <div class='my-8 w-full max-w-3xl mx-auto px-4'>
+    <h1 class='text-2xl md:text-3xl font-bold sm:text-center mb-2'>
+      {post.title}
+    </h1>
+    <div class='sm:text-center text-gray-600'>
+      <time datetime={new Date(post.date).toISOString()}>
+        {dateFormatter.format(new Date(post.date))}
+      </time>
+    </div>
+  </div>
+  <article class='flex-1 my-6 post-container'>
+    <NotionRenderer blockMap={blocks} mapImageUrl={toNotionImageUrl} />
+  </article>
+  <div class='post-container max-w-2xl my-20 text-sm'>
+    <AuthorFooter />
+    <div class='flex justify-between items-center'>
+      <h3 class='font-bold text-gray-600 my-4 uppercase tracking-wider'>
+        Continue reading
+      </h3>
+
+      <a href='/work' class='font-bold text-blue-600 my-4'>View all →</a>
+    </div>
+    <ul class='grid grid-cols-1 sm:grid-cols-2 gap-4'>
+      {morePosts.map((p) => <ProjectCard {...p} />)}
+    </ul>
+  </div>
+  <Footer />
+</BaseLayout>

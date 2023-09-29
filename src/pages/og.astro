@@ -1,0 +1,19 @@
+---
+import BaseLayout from "../Layouts/BaseLayout.astro"
+import Logo from "../assets/svgs/logo.svg"
+import ProfileImage from "../components/base/profile-image.astro"
+const title = Astro.url.searchParams.get("title")
+---
+
+<BaseLayout>
+  <div class='flex flex-col flex-1 px-12 py-8 justify-end relative'>
+    <ProfileImage size={120} />
+    <div class='text-5xl font-bold text-gray-900 mt-2'>{title}</div>
+    <div class='text-4xl text-gray-500'>baggins.me</div>
+    <img
+      src={Logo.src}
+      style={{ opacity: 0.05 }}
+      class='absolute right-0 top-0 max-w-2xl transform translate-x-32 -translate-y-16'
+    />
+  </div>
+</BaseLayout>
