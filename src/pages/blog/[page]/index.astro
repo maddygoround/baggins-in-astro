@@ -6,7 +6,7 @@ import { Blog } from "../../../components/sections/blog"
 import { Post } from "../../../types/blog"
 import { getBlogTable } from "../../../core/blog"
 import { config } from "../../../config"
-import BaseLayout from "../../../Layouts/BaseLayout.astro"
+import BaseLayout from "../../../layouts/BaseLayout.astro"
 
 export const getStaticPaths = async ({ paginate }) => {
   const posts = await getBlogTable<Post>(config.notionBlogTableId)

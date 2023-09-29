@@ -6,7 +6,7 @@ import { Nav } from "../../components/sections/nav"
 import { Project } from "../../types/project"
 import { getBlogTable } from "../../core/blog"
 import { config } from "../../config"
-import BaseLayout from "../../Layouts/BaseLayout.astro"
+import BaseLayout from "../../layouts/BaseLayout.astro"
 
 const projects = await getBlogTable<Project>(config.notionProjectTableId)
 ---
