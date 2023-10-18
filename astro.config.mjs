@@ -1,18 +1,17 @@
 import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
-import nodejs from '@astrojs/node';
 import tailwind from '@astrojs/tailwind';
+import vercel from "@astrojs/vercel/serverless";
 
 // https://astro.build/config
 export default defineConfig({
      output: 'hybrid',
-     adapter: nodejs({
-          mode: 'standalone'
-     }),
      integrations: [react(), tailwind({
-          applyBaseStyles: false,
+          applyBaseStyles: false
      })],
-     redirects: {
-          '/blog': '/blog/[page]',
-     },
+     adapter: vercel({
+          webAnalytics: {
+               enabled: true,
+          },
+     })
 });
