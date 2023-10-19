@@ -13,19 +13,22 @@ import {
 } from "../../types/achievement";
 import { NotionRenderer } from "react-notion";
 
+
 const AchievementIcon: React.FC<{
   type: AchievementType;
   className?: string;
-}> = ({ type, ...props }) => {
+}> = ({ type, ...props } : {
+  type: AchievementType
+}) => {
   switch (type) {
     case "award":
-      return  <img src={Trophy.src}  {...props} /> ;
+      return  <img src={Trophy.src}  {...props} width={Trophy.width} height={Trophy.height} alt="Trophy" aria-label="Trophy" /> ;
     case "education":
-      return <img src={Certificate.src} {...props} />;
+      return <img src={Certificate.src} {...props} width={Certificate.width} height={Certificate.height} alt="Education" aria-label="Education" />;
     case "work":
-      return <img src={Briefcase.src} {...props} />;
+      return <img src={Briefcase.src} {...props}  width={Briefcase.width} height={Briefcase.height} alt="Work" aria-label="Work" />;
     case "security":
-      return <img src={Lock.src} {...props} />;
+      return <img src={Lock.src} {...props} width={Lock.width} height={Lock.height} alt="Security" aria-label="Security" />;
   }
 };
 
@@ -35,7 +38,7 @@ const AchievementRow: React.FC<AchievementProps> = ({
   endDate,
   type,
   blockMap,
-}) => (
+} : AchievementProps) => (
   <div
     className="flex items-center my-8 animate-enter achievement-notion"
     style={{
@@ -43,10 +46,10 @@ const AchievementRow: React.FC<AchievementProps> = ({
     }}
   >
     <AchievementIcon className="w-10 md:w-24" type={type} />
-    <h4 className="flex-1 mx-4">
+    <h1 className="flex-1 mx-4">
       <div className="font-semibold">{title}</div>
       <NotionRenderer blockMap={blockMap} />
-    </h4>
+    </h1>
     <div>
       <Timestamp
         className="border-l pl-2 ml-2"
@@ -59,7 +62,7 @@ const AchievementRow: React.FC<AchievementProps> = ({
 
 export const Achievements: React.FC<{ achievements: Achievement[] }> = ({
   achievements,
-}) => {
+} : { achievements : Achievement[]}) => {
   const [showMore, setShowMore] = useState(false);
 
   return (

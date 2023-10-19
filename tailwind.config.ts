@@ -11,6 +11,7 @@ export default {
   ],
   theme: {
     extend: {
+      fontDisplay : 'swap',
       spacing: {
         "2/3": "66.66666667%",
       },

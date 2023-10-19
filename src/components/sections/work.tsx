@@ -15,7 +15,7 @@ const TypeBadge = ({
   switch (type) {
     case "code":
       return compact ? (
-        <img src={CodeIcon.src} className={iconClassName} alt="Code" aria-label="Code" />
+        <img src={CodeIcon.src} width={CodeIcon.width} height={CodeIcon.height} className={iconClassName} alt="Code" aria-label="Code" />
       ) : (
         <div className={`${tagClassName} bg-green-200 text-green-800`}>
           Code
@@ -23,7 +23,7 @@ const TypeBadge = ({
       );
     case "design":
       return compact ? (
-        <img src={DesignIcon.src} className={iconClassName} alt="Design" aria-label="Design" />
+        <img src={DesignIcon.src} width={DesignIcon.width} height={DesignIcon.height} className={iconClassName} alt="Design" aria-label="Design" />
       ) : (
         <div className={`${tagClassName} bg-orange-200 text-red-700`}>
           Design
@@ -31,7 +31,7 @@ const TypeBadge = ({
       );
     case "video":
       return compact ? (
-        <img src={VideoIcon.src} className={iconClassName} alt="Video" aria-label="Video" />
+        <img src={VideoIcon.src} width={VideoIcon.width} height={VideoIcon.height} className={iconClassName} alt="Video" aria-label="Video" />
 
       ) : (
         <div className={`${tagClassName} bg-blue-200 text-blue-700`}>Video</div>

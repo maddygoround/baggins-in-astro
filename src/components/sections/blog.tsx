@@ -1,6 +1,5 @@
 import { type Post } from "../../types/blog";
 import { formatDate } from "../../core/utils";
-import { useEffect } from "react";
 
 interface BlogProps {
   posts: Post[];

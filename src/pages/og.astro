@@ -3,6 +3,7 @@ import BaseLayout from "../layouts/BaseLayout.astro"
 import Logo from "../assets/svgs/logo.svg"
 import ProfileImage from "../components/base/profile-image.astro"
 const title = Astro.url.searchParams.get("title")
+export const prerender = true
 ---
 
 <BaseLayout>

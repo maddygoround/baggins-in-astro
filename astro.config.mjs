@@ -10,8 +10,6 @@ export default defineConfig({
           applyBaseStyles: false
      })],
      adapter: vercel({
-          webAnalytics: {
-               enabled: true,
-          },
+          edgeMiddleware: true,
      })
 });

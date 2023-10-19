@@ -17,7 +17,7 @@ export const GET: APIRoute = async ({ params, request }) => {
     });
 
     const title = requestURL.searchParams.get('title');
-    const url = `http://localhost:4321/og?title=${title}`;
+    const url = `https://baggins-in-astro.vercel.app/og?title=${title}`;
     await page.goto(url, {
         timeout: 15 * 1000,
     });
