@@ -14,8 +14,23 @@ const projects = await getBlogTable<Project>(config.notionProjectTableId)
 <BaseLayout>
   <Nav />
   <SEO
+    slot='seo'
     title={"Work ~ Mahendra Rathod"}
     description="A collection of some of my work I've made in the past. Including web apps, landing page designs and videos."
+    extend={{
+      meta: [
+        {
+          property: "og:title",
+          content: "Work ~ Mahendra Rathod",
+        },
+        {
+          property: "og:description",
+          content:
+            "A collection of some of my work I've made in the past. Including web apps, landing page designs and videos.",
+        },
+      ],
+    }}
+    canonical={`${import.meta.env.CANONICAL_URL}${Astro.url.pathname}`}
   />
   <Work projects={projects.filter((post) => post.published)} />
   <Footer />

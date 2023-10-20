@@ -53,12 +53,13 @@ const blocks = await getPageBlocks(post.id)
     slot='seo'
     title={post.title}
     description={post.preview}
-    canonical={`https://baggins.me/${post.slug}`}
+    canonical={`${import.meta.env.CANONICAL_URL}/${post.slug}`}
     openGraph={{
       basic: {
         title: `${post.title} – Mahendra Rathod / Work`,
         type: "article",
         image: getOpenGraphImage(post.title).url,
+        url: `${import.meta.env.CANONICAL_URL}/${post.slug}`,
       },
       image: getOpenGraphImage(post.title),
       article: {

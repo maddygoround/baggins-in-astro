@@ -56,9 +56,9 @@ const blocks = await getPageBlocks(post.id)
     description={post.preview}
     openGraph={{
       basic: {
-        title: "A Very Descriptive Title",
-        type: "A type.",
-        image: getOpenGraphImage("Mahendra Rathod").url,
+        title: post.title,
+        type: "article",
+        image: getOpenGraphImage(post.title).url,
       },
       image: getOpenGraphImage(post.title),
       article: {
@@ -69,7 +69,7 @@ const blocks = await getPageBlocks(post.id)
       creator: "@maddygoround1",
       card: "summary_large_image",
     }}
-    canonical={`https://baggins.me/blog/${post.slug}`}
+    canonical={`${import.meta.env.CANONICAL_URL}${Astro.url.pathname}`}
     titleTemplate='%s – Mahendra Rathod / Blog'
   />
 

@@ -32,7 +32,6 @@ const repos = {
   starredRepos,
   contributedRepos,
 }
-
 ---
 
 <BaseLayout>
@@ -46,13 +45,15 @@ const repos = {
         title: "Mahendra Rathod – Code · Play · Sleep",
         type: "profile",
         image: getOpenGraphImage("Mahendra Rathod").url,
+        url: `${import.meta.env.CANONICAL_URL}`,
       },
       image: getOpenGraphImage("Mahendra Rathod"),
     }}
     twitter={{
       creator: "@maddygoround1",
-      card : "summary_large_image"
+      card: "summary_large_image",
     }}
+    canonical={`${import.meta.env.CANONICAL_URL}${Astro.url.pathname}`}
   />
   <Hero />
   <Work projects={projects} preview />
