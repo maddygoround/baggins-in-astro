@@ -59,6 +59,7 @@ const blocks = await getPageBlocks(post.id)
         title: post.title,
         type: "article",
         image: getOpenGraphImage(post.title).url,
+        url: `${import.meta.env.CANONICAL_URL}${Astro.url.pathname}`,
       },
       image: getOpenGraphImage(post.title),
       article: {
