@@ -11,5 +11,8 @@ export default defineConfig({
      })],
      adapter: vercel({
           edgeMiddleware: true,
-     })
+     }),
+     redirects: {
+          '/blog': '/blog/1'
+     }
 });
