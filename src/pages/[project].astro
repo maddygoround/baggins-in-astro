@@ -18,24 +18,23 @@ export const getStaticPaths = async () => {
   const table = await getBlogTable<Project>(config.notionProjectTableId)
   return table
     .filter((row) => row.published)
-    .map((row) => {
+    .map((row, index) => {
       return {
         params: {
           project: `${row.slug}`,
         },
+        props : {
+          post : row,
+          postIndex : index,
+          publishedProjects : table.filter((p) => p.published)
+        }
       }
     })
     .filter(Boolean)
 }
 
 const { project } = Astro.params
-
-const table = await getBlogTable<Project>(config.notionProjectTableId)
-const publishedProjects = table.filter((p) => p.published)
-
-const post = table.find((t) => t.slug === project)
-const postIndex = publishedProjects.findIndex((t) => t.slug === project)
-
+const { post, postIndex , publishedProjects} = Astro.props
 const morePosts = [...publishedProjects, ...publishedProjects].slice(
   postIndex + 1,
   postIndex + 3

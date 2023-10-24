@@ -39,8 +39,6 @@ if (!blog) {
   throw Error("No slug given")
 }
 
-const table = await getBlogTable<Post>(config.notionBlogTableId)
-
 const { post } = Astro.props
 if (!post || (!post.published && import.meta.env.NODE_ENV !== "development")) {
   throw Error(`Failed to find post for slug: ${blog}`)
