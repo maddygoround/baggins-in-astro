@@ -49,15 +49,16 @@ const { page } = Astro.props
   <div class='flex justify-between items-center my-8 container relative'>
     {
       page.url.prev ? (
-        <a href={page.url.prev} class='text-blue-600 text-sm left-0 absolute'>
-          <span class='font-semibold'>← Previous</span>
+        <a href={page.url.prev} class='flex items-center pt-3 text-gray-600 hover:text-indigo-700 cursor-pointer text-sm left-0 absolute'>
+               <p class="text-sm ml-3 font-medium leading-none ">← Previous</p>         
+          
         </a>
       ) : null
     }
     {
       page.url.next ? (
-        <a href={page.url.next} class='text-blue-600 text-sm right-0 absolute'>
-          <span class='font-semibold'>Next →</span>
+        <a href={page.url.next} class='flex items-center pt-3 text-gray-600 hover:text-indigo-700 cursor-pointer text-sm right-0 absolute'>
+           <p class="text-sm font-medium leading-none mr-3">Next →</p>
         </a>
       ) : null
     }
