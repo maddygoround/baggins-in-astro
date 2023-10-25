@@ -8,6 +8,8 @@ export default {
     "./src/Layouts/**/*.astro",
     "./src/components/*.tsx",
     "./src/components/**/*.tsx",
+    "./src/components/*.astro",
+    "./src/components/**/*.astro",
   ],
   theme: {
     extend: {

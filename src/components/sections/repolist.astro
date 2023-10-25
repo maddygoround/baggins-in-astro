@@ -1,0 +1,38 @@
+---
+import { type Repo } from "../../core/github"
+
+interface RepoList {
+  repos: Repo[]
+  title: string
+  url: string
+}
+
+const { repos, title, url } = Astro.props as RepoList
+---
+
+<div>
+  <h2 class='text-2xl text-gray-600'>{title}</h2>
+  <ul>
+    {
+      repos.map(({ id, name, url, description, owner }) => (
+        <li>
+          <a
+            href={url}
+            data-splitbee-event={"Open External Link"}
+            data-splitbee-event-url={url}
+            class='block my-4 p-4 -mx-4 hover:bg-gray-100 rounded-md'
+          >
+            <div>
+              <span class='text-blue-400'>{owner.login}/</span>
+              <span class='text-blue-600'>{name}</span>
+            </div>
+            <div>{description}</div>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+  <a href={url} class='text-blue-600 text-sm'>
+    View more on <span class='font-semibold'>GitHub</span> →
+  </a>
+</div>

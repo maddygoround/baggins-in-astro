@@ -1,0 +1,28 @@
+---
+import { type Repo } from "../../core/github"
+import { config } from "../../config"
+import RepoList from "./repolist.astro"
+
+type UserRepos = {
+  starredRepos: Repo[]
+  contributedRepos: Repo[]
+}
+
+const { starredRepos, contributedRepos } = Astro.props as UserRepos
+---
+
+<div class='container'>
+  <h1 class='text-4xl font-bold'>GitHub Activity</h1>
+  <div class='grid grid-cols-1 md:grid-cols-2 gap-24 md:gap-32'>
+    <RepoList
+      title='Repos I Contributed to'
+      url={`https://github.com/${config.githubUsername}`}
+      repos={contributedRepos}
+    />
+    <RepoList
+      title='Repos I Like'
+      repos={starredRepos}
+      url={`https://github.com/${config.githubUsername}?tab=stars`}
+    />
+  </div>
+</div>

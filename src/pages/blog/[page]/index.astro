@@ -1,12 +1,12 @@
 ---
 import { SEO } from "astro-seo"
 import { Nav } from "../../../components/sections/nav"
-import { Footer } from "../../../components/sections/footer"
-import { Blog } from "../../../components/sections/blog"
+import Footer  from "../../../components/sections/footer.astro"
 import { Post } from "../../../types/blog"
 import { getBlogTable } from "../../../core/blog"
 import { config } from "../../../config"
 import BaseLayout from "../../../layouts/BaseLayout.astro"
+import Blog  from "../../../components/sections/blog.astro"
 
 export const getStaticPaths = async ({ paginate }) => {
   const posts = await getBlogTable<Post>(config.notionBlogTableId)
