@@ -1,7 +1,9 @@
 const githubToken = import.meta.env.GITHUB_TOKEN;
 
 export const config = {
-  name: "Mahendra Rathod",
+  website : "https://baggins.com",
+  author: "Mahendra Rathod",
+  description: "I code and build apps, and everything that comes with it.",
   subtitle: "Code · Design · Sleep",
   birthday: "1989-04-16",
   githubUsername: "maddygoround",

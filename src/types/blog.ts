@@ -6,4 +6,5 @@ export interface Post {
   published: boolean;
   preview: string;
   title: string;
+  tags: string[];
 }

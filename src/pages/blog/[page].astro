@@ -1,12 +1,12 @@
 ---
 import { SEO } from "astro-seo"
-import { Nav } from "../../../components/sections/nav"
-import Footer  from "../../../components/sections/footer.astro"
-import { Post } from "../../../types/blog"
-import { getBlogTable } from "../../../core/blog"
-import { config } from "../../../config"
-import BaseLayout from "../../../layouts/BaseLayout.astro"
-import Blog  from "../../../components/sections/blog.astro"
+import { Nav } from "../../components/sections/nav"
+import Footer from "../../components/sections/footer.astro"
+import { Post } from "../../types/blog"
+import { getBlogTable } from "../../core/blog"
+import { config } from "../../config"
+import BaseLayout from "../../layouts/BaseLayout.astro"
+import Blog from "../../components/sections/blog.astro"
 
 export const getStaticPaths = async ({ paginate }) => {
   const posts = await getBlogTable<Post>(config.notionBlogTableId)
@@ -18,14 +18,14 @@ export const getStaticPaths = async ({ paginate }) => {
   // Generate pages from our array of astronauts, with 2 to a page
   return paginate(filteredPosts, { pageSize: 4 })
 }
-
+console.log("Astro params", Astro.params)
 const { page } = Astro.props
 ---
 
 <BaseLayout>
   <Nav />
   <SEO
-    slot="seo"
+    slot='seo'
     title={"Blog ~ Mahendra Rathod"}
     description='My personal blog about design, coding and everything else that is on my mind.'
     extend={{
@@ -41,7 +41,7 @@ const { page } = Astro.props
         },
       ],
     }}
-        canonical={`${import.meta.env.CANONICAL_URL}${Astro.url.pathname}`}
+    canonical={`${import.meta.env.CANONICAL_URL}${Astro.url.pathname}`}
   />
   <div class='flex-1'>
     <Blog posts={page.data} />
@@ -49,16 +49,21 @@ const { page } = Astro.props
   <div class='flex justify-between items-center my-8 container relative'>
     {
       page.url.prev ? (
-        <a href={page.url.prev} class='flex items-center pt-3 text-gray-600 hover:text-indigo-700 cursor-pointer text-sm left-0 absolute'>
-               <p class="text-sm ml-3 font-medium leading-none ">← Previous</p>         
-          
+        <a
+          href={page.url.prev}
+          class='flex items-center pt-3 text-gray-600 hover:text-indigo-700 cursor-pointer text-sm left-0 absolute'
+        >
+          <p class='text-sm ml-3 font-medium leading-none '>← Previous</p>
         </a>
       ) : null
     }
     {
       page.url.next ? (
-        <a href={page.url.next} class='flex items-center pt-3 text-gray-600 hover:text-indigo-700 cursor-pointer text-sm right-0 absolute'>
-           <p class="text-sm font-medium leading-none mr-3">Next →</p>
+        <a
+          href={page.url.next}
+          class='flex items-center pt-3 text-gray-600 hover:text-indigo-700 cursor-pointer text-sm right-0 absolute'
+        >
+          <p class='text-sm font-medium leading-none mr-3'>Next →</p>
         </a>
       ) : null
     }

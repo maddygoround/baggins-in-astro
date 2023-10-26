@@ -47,7 +47,7 @@ export const Project: React.FC<
   }
 > = ({ title, preview, images, featured, slug, types, className }) => (
     <a
-    href={`/${slug}`}
+    href={`/project/${slug}`}
       aria-label={`${title} - Project`}
       className={clsx(
         "focus group border bg-white rounded-md overflow-hidden flex flex-col",

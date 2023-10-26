@@ -17,5 +17,13 @@ export default defineConfig({
      }),
      redirects: {
           '/blog': '/blog/1'
+     },
+     vite: {
+          ssr: {
+               external: ['@resvg/resvg-js']
+          },
+          optimizeDeps: {
+               exclude: ["@resvg/resvg-js"]
+          }
      }
 });

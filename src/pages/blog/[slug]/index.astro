@@ -2,17 +2,21 @@
 import "react-notion/src/styles.css"
 import { SEO } from "astro-seo"
 import { NotionRenderer } from "react-notion"
-import { config } from "../../config"
+import { config } from "../../../config"
 
-import { getBlogTable, getPageBlocks } from "../../core/blog"
-import { dateFormatter } from "../../core/utils"
-import { Post } from "../../types/blog"
-import { Nav } from "../../components/sections/nav"
-import { AuthorFooter } from "../../components/base/author-footer"
-import Footer from "../../components/sections/footer.astro"
-import { toNotionImageUrl } from "../../core/notion"
-import { getOpenGraphImage } from "../../core/og-image"
-import BaseLayout from "../../layouts/BaseLayout.astro"
+import { getBlogTable, getPageBlocks } from "../../../core/blog"
+import { dateFormatter } from "../../../core/utils"
+import { Post } from "../../../types/blog"
+import { Nav } from "../../../components/sections/nav"
+import { AuthorFooter } from "../../../components/base/author-footer"
+import Footer from "../../../components/sections/footer.astro"
+import { toNotionImageUrl } from "../../../core/notion"
+import { getOpenGraphImageForPost } from "../../../core/og-image"
+import BaseLayout from "../../../layouts/BaseLayout.astro"
+
+interface PostProps {
+  post: Post
+}
 
 export const getStaticPaths = async () => {
   const table = await getBlogTable<Post>(config.notionBlogTableId)
@@ -23,7 +27,7 @@ export const getStaticPaths = async () => {
     .map((row) => {
       return {
         params: {
-          blog: `${row.slug}`,
+          slug: `${row.slug}`,
         },
         props: {
           post: row,
@@ -33,15 +37,16 @@ export const getStaticPaths = async () => {
     .filter(Boolean)
 }
 
-const { blog } = Astro.params
+const { slug } = Astro.params
 
-if (!blog) {
+if (!slug) {
   throw Error("No slug given")
 }
 
-const { post } = Astro.props
+const { post } = Astro.props as PostProps
+
 if (!post || (!post.published && import.meta.env.NODE_ENV !== "development")) {
-  throw Error(`Failed to find post for slug: ${blog}`)
+  throw Error(`Failed to find post for slug: ${slug}`)
 }
 
 const blocks = await getPageBlocks(post.id)
@@ -56,12 +61,17 @@ const blocks = await getPageBlocks(post.id)
       basic: {
         title: post.title,
         type: "article",
-        image: getOpenGraphImage(post.title).url,
+        image: getOpenGraphImageForPost(post.slug).url,
         url: `${import.meta.env.CANONICAL_URL}${Astro.url.pathname}`,
       },
-      image: getOpenGraphImage(post.title),
+      optional: {
+        description: post.preview,
+      },
+      image: getOpenGraphImageForPost(post.slug),
       article: {
         publishedTime: new Date(post.date).toISOString(),
+        authors: ["Mahendra Rathod"],
+        tags: post.tags,
       },
     }}
     twitter={{

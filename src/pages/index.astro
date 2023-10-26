@@ -10,7 +10,7 @@ import Footer  from "../components/sections/footer.astro"
 import { Achievements } from "../components/sections/achievements"
 import { type Achievement } from "../types/achievement"
 import { SEO } from "astro-seo"
-import { getOpenGraphImage } from "../core/og-image"
+import { getOpenGraphImageForSite } from "../core/og-image"
 import { fetchRepos } from "../core/github"
 
 const projects = await getBlogTable<Project>(config.notionProjectTableId)
@@ -44,10 +44,13 @@ const repos = {
       basic: {
         title: "Mahendra Rathod – Code · Play · Sleep",
         type: "profile",
-        image: getOpenGraphImage("Mahendra Rathod").url,
+        image: getOpenGraphImageForSite().url,
         url: `${import.meta.env.CANONICAL_URL}`,
       },
-      image: getOpenGraphImage("Mahendra Rathod"),
+      optional : {
+        description: "Hey I'm Mahendra! I code and build digital products. Gaming and Streaming are also my passion.",
+      },
+      image: getOpenGraphImageForSite(),
     }}
     twitter={{
       creator: "@maddygoround1",
